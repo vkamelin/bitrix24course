@@ -253,7 +253,7 @@ $formToken = generateFormToken();
     <?php if ($screen === 'start'): ?>
         <section class="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 sm:p-8">
             <h1 class="text-2xl sm:text-3xl font-bold mb-3">Тестирование сотрудников по Битрикс24</h1>
-            <p class="text-slate-600 mb-6">Введите ФИО и начните тест из 10 случайных вопросов.</p>
+            <p class="text-slate-600 mb-6">Введите ФИО и начните тест.</p>
 
             <?php if ($errors !== []): ?>
                 <div class="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-red-700">
