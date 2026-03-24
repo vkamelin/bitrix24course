@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 session_start();
 
+date_default_timezone_set('Europe/Moscow');
+
 require __DIR__ . '/questions.php';
 
 const QUESTIONS_PER_TEST = 10;
