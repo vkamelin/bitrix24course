@@ -86,19 +86,21 @@ function calculateResult(array $selectedIndexes, array $answers, array $allQuest
     ];
 }
 
-function generateFormToken(): string
+function getFormToken(): string
 {
-    $token = bin2hex(random_bytes(16));
-    $_SESSION['form_token'] = $token;
+    if (!isset($_SESSION['form_token'])) {
+        $_SESSION['form_token'] = bin2hex(random_bytes(16));
+    }
 
-    return $token;
+    return $_SESSION['form_token'];
 }
 
-function verifyFormToken(string $token): bool
+function verifyAndClearFormToken(string $token): bool
 {
     $sessionToken = $_SESSION['form_token'] ?? null;
 
     if (!is_string($sessionToken) || !hash_equals($sessionToken, $token)) {
+        unset($_SESSION['form_token']);
         return false;
     }
 
@@ -119,7 +121,7 @@ if ($action === 'restart') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $token = trim((string) ($_POST['form_token'] ?? ''));
 
-    if (!verifyFormToken($token)) {
+    if (!verifyAndClearFormToken($token)) {
         $errors[] = 'Форма уже была отправлена или токен недействителен. Попробуйте ещё раз.';
     } else {
         if ($action === 'start') {
@@ -220,7 +222,7 @@ if (($state['completed'] ?? false) === true && isset($state['result'], $state['f
     }
 }
 
-$formToken = generateFormToken();
+$formToken = getFormToken();
 
 ?>
 <!DOCTYPE html>
